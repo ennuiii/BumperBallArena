@@ -710,14 +710,7 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-// Serve static files from client build (production)
-if (process.env.NODE_ENV === 'production') {
-  const clientDistPath = path.join(__dirname, '..', '..', 'client', 'dist');
-  console.log(`[Static] Serving client from: ${clientDistPath}`);
-  app.use(express.static(clientDistPath));
-}
-
-// Health check endpoint
+// Health check endpoint (before static files to ensure it's accessible)
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -726,10 +719,22 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Catch-all route for client-side routing (SPA) - must be last
+// Serve static files from client build (production)
 if (process.env.NODE_ENV === 'production') {
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', '..', 'client', 'dist', 'index.html'));
+  const clientDistPath = path.join(__dirname, '..', '..', 'client', 'dist');
+  console.log(`[Static] Serving client from: ${clientDistPath}`);
+
+  // Serve static files
+  app.use(express.static(clientDistPath));
+
+  // SPA catch-all: serve index.html for all non-API routes
+  app.use((req, res, next) => {
+    // Skip if it's a Socket.IO request or API endpoint
+    if (req.path.startsWith('/socket.io') || req.path.startsWith('/health')) {
+      return next();
+    }
+    // For all other routes, serve index.html (client-side routing)
+    res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 }
 
