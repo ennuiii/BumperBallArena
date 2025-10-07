@@ -13,7 +13,7 @@ import {
   validateChatMessage,
 } from './utils/validation';
 import { randomUUID } from 'crypto';
-import { initializeBumperBallsGame, setupBumperBallsHandlers } from './games/bumper-balls';
+import { initializeBumperBallsGame, setupBumperBallsHandlers, activeGames } from './games/bumper-balls';
 
 dotenv.config();
 
@@ -386,6 +386,17 @@ io.on('connection', (socket: Socket) => {
 
       console.log(`[Lobby ${lobby.code}] Restarting game`);
 
+      // Clean up active Bumper Balls game
+      const game = activeGames.get(data.roomCode);
+      if (game) {
+        if (game.gameLoop) clearInterval(game.gameLoop);
+        if (game.syncLoop) clearInterval(game.syncLoop);
+        if (game.countdownInterval) clearInterval(game.countdownInterval);
+        if (game.cleanupTimeout) clearTimeout(game.cleanupTimeout);
+        activeGames.delete(data.roomCode);
+        console.log(`[Lobby ${lobby.code}] Cleaned up Bumper Balls game`);
+      }
+
       // Reset scores
       lobby.players.forEach(p => (p.score = 0));
       lobby.state = 'LOBBY_WAITING';
@@ -594,6 +605,36 @@ io.on('connection', (socket: Socket) => {
   // WEBRTC SIGNALING
   // =====================================================
 
+  socket.on('webrtc:enable-video', ({ roomCode, peerId, connectionType }) => {
+    // Add peer to video-enabled list for this room
+    if (!videoEnabledPeers.has(roomCode)) {
+      videoEnabledPeers.set(roomCode, new Set());
+    }
+    videoEnabledPeers.get(roomCode)!.add(peerId);
+    peerConnectionTypes.set(peerId, connectionType);
+
+    // Notify all peers in room about video-enabled peers
+    const peers = Array.from(videoEnabledPeers.get(roomCode)!);
+    const types: Record<string, string> = {};
+    peers.forEach(id => {
+      types[id] = peerConnectionTypes.get(id) || 'has-camera';
+    });
+
+    io.to(roomCode).emit('webrtc:video-enabled-peers', { peers, peerConnectionTypes: types });
+    socket.to(roomCode).emit('webrtc:peer-enabled-video', { peerId, connectionType });
+
+    console.log(`[WebRTC] ${peerId} enabled video in room ${roomCode} (${connectionType})`);
+  });
+
+  socket.on('webrtc:disable-video', ({ roomCode, peerId }) => {
+    const roomPeers = videoEnabledPeers.get(roomCode);
+    if (roomPeers) {
+      roomPeers.delete(peerId);
+      socket.to(roomCode).emit('webrtc:peer-disabled-video', { peerId });
+      console.log(`[WebRTC] ${peerId} disabled video in room ${roomCode}`);
+    }
+  });
+
   socket.on('webrtc:offer', ({ roomCode, toPeerId, offer }) => {
     io.to(toPeerId).emit('webrtc:offer', { fromPeerId: socket.id, offer });
   });
@@ -604,37 +645,6 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('webrtc:ice-candidate', ({ roomCode, toPeerId, candidate }) => {
     io.to(toPeerId).emit('webrtc:ice-candidate', { fromPeerId: socket.id, candidate });
-  });
-
-  socket.on('webrtc:enable-video', ({ roomCode, peerId, connectionType }) => {
-    console.log(`[WebRTC] ${peerId} enabled video (type: ${connectionType})`);
-
-    if (!videoEnabledPeers.has(roomCode)) {
-      videoEnabledPeers.set(roomCode, new Set());
-    }
-    videoEnabledPeers.get(roomCode)!.add(peerId);
-
-    if (connectionType) {
-      peerConnectionTypes.set(peerId, connectionType);
-    }
-
-    socket.to(roomCode).emit('webrtc:peer-video-enabled', {
-      peerId,
-      connectionType: connectionType || 'unknown',
-    });
-  });
-
-  socket.on('webrtc:disable-video', ({ roomCode, peerId }) => {
-    console.log(`[WebRTC] ${peerId} disabled video`);
-
-    const peers = videoEnabledPeers.get(roomCode);
-    if (peers) {
-      peers.delete(peerId);
-    }
-
-    peerConnectionTypes.delete(peerId);
-
-    socket.to(roomCode).emit('webrtc:peer-video-disabled', { peerId });
   });
 
   // =====================================================
@@ -700,7 +710,10 @@ io.on('connection', (socket: Socket) => {
 
       // Clean up WebRTC
       for (const [roomCode, peers] of videoEnabledPeers.entries()) {
-        peers.delete(socket.id);
+        if (peers.has(socket.id)) {
+          peers.delete(socket.id);
+          io.to(roomCode).emit('webrtc:peer-left', { peerId: socket.id });
+        }
       }
       peerConnectionTypes.delete(socket.id);
 
