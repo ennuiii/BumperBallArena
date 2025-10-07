@@ -408,6 +408,7 @@ io.on('connection', (socket: Socket) => {
 
       io.to(lobby.code).emit('lobby:player-joined', {
         players: lobby.players.map(sanitizePlayer),
+        state: lobby.state,  // Include state so client updates properly
       });
 
       sendSystemMessage(lobby, 'Game restarted - back to lobby');

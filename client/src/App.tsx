@@ -129,11 +129,15 @@ function App() {
       setError('');
     });
 
-    socket.on('lobby:player-joined', (data: { players: any[] }) => {
+    socket.on('lobby:player-joined', (data: { players: any[]; state?: string }) => {
       console.log('[App] Player joined');
       setLobby((prevLobby) => {
         if (!prevLobby) return prevLobby;
-        return { ...prevLobby, players: data.players };
+        return {
+          ...prevLobby,
+          players: data.players,
+          ...(data.state && { state: data.state })  // Update state if provided
+        };
       });
     });
 
