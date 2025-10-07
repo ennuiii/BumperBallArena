@@ -129,7 +129,7 @@ function App() {
       setError('');
     });
 
-    socket.on('lobby:player-joined', (data: { players: any[]; state?: string }) => {
+    socket.on('lobby:player-joined', (data: { players: any[]; state?: GameState }) => {
       console.log('[App] Player joined');
       setLobby((prevLobby) => {
         if (!prevLobby) return prevLobby;
