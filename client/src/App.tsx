@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import socketService from './services/socketService';
 import { getCurrentSession, resolvePendingSession } from './services/gameBuddiesSession';
 import type { GameBuddiesSession } from './services/gameBuddiesSession';
-import type { Lobby, ChatMessage } from './types';
+import type { Lobby, ChatMessage, GameState } from './types';
 import Home from './components/Home';
 import LobbyComponent from './components/Lobby';
 import GameComponent from './components/GameComponent';
