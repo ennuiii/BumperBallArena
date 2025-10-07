@@ -1,0 +1,874 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default Theme - Cosmic Night */
+:root, [data-theme="cosmic-night"] {
+  --primary-50: #1e1b4b;
+  --primary-100: #312e81;
+  --primary-200: #3730a3;
+  --primary-300: #4338ca;
+  --primary-400: #5b21b6;
+  --primary-500: #7c3aed;
+  --primary-600: #8b5cf6;
+  --primary-700: #a78bfa;
+  --primary-800: #c4b5fd;
+  --primary-900: #ddd6fe;
+
+  --success-400: #10b981;
+  --success-500: #059669;
+  --success-600: #047857;
+
+  --danger-400: #f87171;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+
+  --warning-400: #f59e0b;
+  --warning-500: #d97706;
+  --warning-600: #b45309;
+
+  --gold-400: #fbbf24;
+  --gold-500: #f59e0b;
+  --gold-600: #d97706;
+
+  /* Dark mode colors */
+  --bg-primary: #0f0f23;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16213e;
+  --bg-quaternary: #0e1628;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-accent: #60a5fa;
+  --border-color: #334155;
+  --card-bg: rgba(30, 41, 59, 0.8);
+  --accent-color: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-glow: rgba(139, 92, 246, 0.4);
+}
+
+/* Ocean Depths Theme */
+[data-theme="ocean-depths"] {
+  --primary-50: #0c4a6e;
+  --primary-100: #075985;
+  --primary-200: #0369a1;
+  --primary-300: #0284c7;
+  --primary-400: #0ea5e9;
+  --primary-500: #38bdf8;
+  --primary-600: #7dd3fc;
+  --primary-700: #bae6fd;
+  --primary-800: #e0f2fe;
+  --primary-900: #f0f9ff;
+
+  --success-400: #34d399;
+  --success-500: #10b981;
+  --success-600: #059669;
+
+  --danger-400: #fb7185;
+  --danger-500: #f43f5e;
+  --danger-600: #e11d48;
+
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+
+  --gold-400: #fcd34d;
+  --gold-500: #fbbf24;
+  --gold-600: #f59e0b;
+
+  --bg-primary: #051923;
+  --bg-secondary: #003554;
+  --bg-tertiary: #006494;
+  --bg-quaternary: #003f5c;
+  --text-primary: #e0f2fe;
+  --text-secondary: #7dd3fc;
+  --text-accent: #38bdf8;
+  --border-color: #0c4a6e;
+  --card-bg: rgba(5, 25, 35, 0.8);
+  --accent-color: #0582ca;
+  --accent-hover: #0369a1;
+  --accent-glow: rgba(5, 130, 202, 0.4);
+}
+
+/* Sunset Horizon Theme */
+[data-theme="sunset-horizon"] {
+  --primary-50: #7f1d1d;
+  --primary-100: #991b1b;
+  --primary-200: #b91c1c;
+  --primary-300: #dc2626;
+  --primary-400: #ef4444;
+  --primary-500: #f87171;
+  --primary-600: #fca5a5;
+  --primary-700: #fecaca;
+  --primary-800: #fee2e2;
+  --primary-900: #fef2f2;
+
+  --success-400: #86efac;
+  --success-500: #4ade80;
+  --success-600: #22c55e;
+
+  --danger-400: #fda4af;
+  --danger-500: #fb7185;
+  --danger-600: #f43f5e;
+
+  --warning-400: #fed7aa;
+  --warning-500: #fdba74;
+  --warning-600: #fb923c;
+
+  --gold-400: #fde68a;
+  --gold-500: #fcd34d;
+  --gold-600: #fbbf24;
+
+  --bg-primary: #1a0707;
+  --bg-secondary: #3d1308;
+  --bg-tertiary: #722f37;
+  --bg-quaternary: #451a03;
+  --text-primary: #fef2f2;
+  --text-secondary: #fecaca;
+  --text-accent: #fca5a5;
+  --border-color: #7f1d1d;
+  --card-bg: rgba(26, 7, 7, 0.8);
+  --accent-color: #ff6b6b;
+  --accent-hover: #ee5a5a;
+  --accent-glow: rgba(255, 107, 107, 0.4);
+}
+
+/* Forest Mist Theme */
+[data-theme="forest-mist"] {
+  --primary-50: #14532d;
+  --primary-100: #166534;
+  --primary-200: #15803d;
+  --primary-300: #16a34a;
+  --primary-400: #22c55e;
+  --primary-500: #4ade80;
+  --primary-600: #86efac;
+  --primary-700: #bbf7d0;
+  --primary-800: #dcfce7;
+  --primary-900: #f0fdf4;
+
+  --success-400: #4ade80;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+
+  --danger-400: #fca5a5;
+  --danger-500: #f87171;
+  --danger-600: #ef4444;
+
+  --warning-400: #fde047;
+  --warning-500: #facc15;
+  --warning-600: #eab308;
+
+  --gold-400: #fde68a;
+  --gold-500: #fde047;
+  --gold-600: #facc15;
+
+  --bg-primary: #0d1f0d;
+  --bg-secondary: #1a3a1a;
+  --bg-tertiary: #2d5016;
+  --bg-quaternary: #14532d;
+  --text-primary: #f0fdf4;
+  --text-secondary: #bbf7d0;
+  --text-accent: #86efac;
+  --border-color: #14532d;
+  --card-bg: rgba(13, 31, 13, 0.8);
+  --accent-color: #52b788;
+  --accent-hover: #40916c;
+  --accent-glow: rgba(82, 183, 136, 0.4);
+}
+
+/* Aurora Borealis Theme */
+[data-theme="aurora-borealis"] {
+  --primary-50: #1e3a8a;
+  --primary-100: #1e40af;
+  --primary-200: #2563eb;
+  --primary-300: #3b82f6;
+  --primary-400: #60a5fa;
+  --primary-500: #93c5fd;
+  --primary-600: #bfdbfe;
+  --primary-700: #dbeafe;
+  --primary-800: #eff6ff;
+  --primary-900: #f0f9ff;
+
+  --success-400: #6ee7b7;
+  --success-500: #34d399;
+  --success-600: #10b981;
+
+  --danger-400: #f9a8d4;
+  --danger-500: #f472b6;
+  --danger-600: #ec4899;
+
+  --warning-400: #c084fc;
+  --warning-500: #a855f7;
+  --warning-600: #9333ea;
+
+  --gold-400: #e9d5ff;
+  --gold-500: #d8b4fe;
+  --gold-600: #c084fc;
+
+  --bg-primary: #0a0e27;
+  --bg-secondary: #1e3a5f;
+  --bg-tertiary: #16537e;
+  --bg-quaternary: #1e293b;
+  --text-primary: #f0f9ff;
+  --text-secondary: #bfdbfe;
+  --text-accent: #93c5fd;
+  --border-color: #1e3a8a;
+  --card-bg: rgba(10, 14, 39, 0.8);
+  --accent-color: #00f5ff;
+  --accent-hover: #00d9e3;
+  --accent-glow: rgba(0, 245, 255, 0.4);
+}
+
+/* Volcanic Ash Theme */
+[data-theme="volcanic-ash"] {
+  --primary-50: #44403c;
+  --primary-100: #57534e;
+  --primary-200: #78716c;
+  --primary-300: #a8a29e;
+  --primary-400: #d6d3d1;
+  --primary-500: #e7e5e4;
+  --primary-600: #f5f5f4;
+  --primary-700: #fafaf9;
+  --primary-800: #fafafa;
+  --primary-900: #ffffff;
+
+  --success-400: #86efac;
+  --success-500: #4ade80;
+  --success-600: #22c55e;
+
+  --danger-400: #fca5a5;
+  --danger-500: #f87171;
+  --danger-600: #ef4444;
+
+  --warning-400: #fdba74;
+  --warning-500: #fb923c;
+  --warning-600: #f97316;
+
+  --gold-400: #fed7aa;
+  --gold-500: #fdba74;
+  --gold-600: #fb923c;
+
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --bg-quaternary: #171717;
+  --text-primary: #fafafa;
+  --text-secondary: #d6d3d1;
+  --text-accent: #a8a29e;
+  --border-color: #44403c;
+  --card-bg: rgba(10, 10, 10, 0.8);
+  --accent-color: #ff7f50;
+  --accent-hover: #ff6347;
+  --accent-glow: rgba(255, 127, 80, 0.4);
+}
+
+@layer base {
+  html {
+    @apply h-full;
+    background: #0f0f23 !important;
+  }
+
+  body {
+    @apply h-full font-sans;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg,
+      var(--bg-primary) 0%,
+      var(--bg-secondary) 25%,
+      var(--bg-tertiary) 50%,
+      var(--bg-quaternary) 75%,
+      var(--bg-primary) 100%) !important;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text-primary);
+  }
+
+  #root {
+    @apply min-h-screen;
+    background: linear-gradient(135deg,
+      var(--bg-primary) 0%,
+      var(--bg-secondary) 25%,
+      var(--bg-tertiary) 50%,
+      var(--bg-quaternary) 75%,
+      var(--bg-primary) 100%) !important;
+    background-attachment: fixed;
+  }
+
+  * {
+    @apply border-slate-600;
+    box-sizing: border-box;
+  }
+
+  /* Override any white backgrounds */
+  .bg-white {
+    @apply bg-slate-800 !important;
+  }
+
+  .bg-gray-50 {
+    @apply bg-slate-900 !important;
+  }
+
+  .bg-gray-100 {
+    @apply bg-slate-800 !important;
+  }
+
+  /* Ensure the entire app has dark background */
+  div[class*="min-h-screen"] {
+    background: linear-gradient(135deg,
+      var(--bg-primary) 0%,
+      var(--bg-secondary) 25%,
+      var(--bg-tertiary) 50%,
+      var(--bg-quaternary) 75%,
+      var(--bg-primary) 100%) !important;
+    background-attachment: fixed;
+  }
+
+  /* Ensure all text is readable */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-100;
+  }
+
+  p {
+    @apply text-slate-200;
+  }
+
+  label {
+    @apply text-slate-200;
+  }
+
+  /* Ensure select elements are styled properly */
+  select {
+    @apply bg-slate-700 text-slate-100;
+  }
+
+  /* Ensure textarea elements are styled properly */
+  textarea {
+    @apply bg-slate-700 text-slate-100;
+  }
+
+  /* Fix any remaining white text on white background issues */
+  .text-gray-600 {
+    @apply text-slate-300;
+  }
+
+  .text-gray-700 {
+    @apply text-slate-200;
+  }
+
+  .text-gray-800 {
+    @apply text-slate-100;
+  }
+
+  .text-gray-900 {
+    @apply text-slate-50;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-xl font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 transform hover:scale-105 active:scale-95 shadow-sm hover:shadow-md;
+  }
+
+  .btn-primary {
+    @apply text-white shadow-lg;
+    background: linear-gradient(to right, var(--accent-color), var(--accent-hover));
+    box-shadow: 0 10px 15px -3px var(--accent-glow);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(to right, var(--accent-hover), var(--accent-color));
+  }
+
+  .btn-primary:focus {
+    --tw-ring-color: var(--accent-color);
+  }
+
+  .btn-secondary {
+    @apply bg-gradient-to-r from-slate-700 to-slate-600 text-slate-100 hover:from-slate-600 hover:to-slate-500 focus:ring-slate-500 border border-slate-500 shadow-lg shadow-slate-500/20;
+  }
+
+  .btn-success {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-700 hover:to-teal-700 focus:ring-emerald-500 shadow-lg shadow-emerald-500/30;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-600 to-rose-600 text-white hover:from-red-700 hover:to-rose-700 focus:ring-red-500 shadow-lg shadow-red-500/30;
+  }
+
+  .btn-warning {
+    @apply bg-gradient-to-r from-amber-600 to-orange-600 text-white hover:from-amber-700 hover:to-orange-700 focus:ring-amber-500 shadow-lg shadow-amber-500/30;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg font-semibold;
+  }
+
+  .card {
+    @apply bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/50 p-6 transition-all duration-300 hover:shadow-purple-500/10 hover:bg-slate-800/90 hover:border-slate-500/60;
+  }
+
+  .card-gradient {
+    @apply bg-gradient-to-br from-slate-800/90 to-slate-900/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-slate-600/50 p-6 transition-all duration-300 hover:shadow-purple-500/10;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 border border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-slate-700/80 backdrop-blur-sm text-slate-100 placeholder-slate-400;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  .slide-down {
+    animation: slideDown 0.4s ease-out;
+  }
+
+  .bounce-in {
+    animation: bounceIn 0.6s ease-out;
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .timer-pulse {
+    animation: timerPulse 1s ease-in-out infinite;
+  }
+
+  .gradient-text {
+    background: linear-gradient(to right, var(--accent-color), var(--text-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-border {
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, #3b82f6, #8b5cf6) border-box;
+    border: 2px solid transparent;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    transform: scale(1.05) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes timerPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* Glassmorphism variables */
+:root {
+  --glass-bg: rgba(15, 23, 42, 0.85);
+  --glass-border: rgba(139, 92, 246, 0.3);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Main app layout */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-primary);
+}
+
+/* Webcam toggle button - positioned in bottom center */
+.webcam-toggle-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(124, 58, 237, 0.9));
+  color: white;
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  letter-spacing: 0.5px;
+}
+
+.webcam-toggle-btn:hover {
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.7);
+}
+
+.webcam-toggle-btn:active {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+/* Webcam top bar */
+.webcam-top-bar {
+  padding: 0.75rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  z-index: 40;
+}
+
+/* Reduce webcam video size when videos are present */
+.webcam-top-bar video {
+  max-height: 220px;
+  border-radius: 0.75rem;
+}
+
+.webcam-top-bar .aspect-video {
+  max-height: 220px;
+  width: auto;
+}
+
+/* When video grid is present, limit the container height */
+.webcam-top-bar:has(.grid) {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.webcam-top-bar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+/* Add margin to video grid to prevent cutoff at bottom */
+.webcam-top-bar .grid {
+  margin-bottom: 0.75rem;
+}
+
+/* Shift video feeds up slightly within their containers */
+.webcam-top-bar .aspect-video {
+  position: relative;
+  top: -8px;
+}
+
+/* Main container - holds game content and sidebar */
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Game content area */
+.game-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  background: var(--bg-primary);
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.game-content::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+/* Right sidebar */
+.right-sidebar {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+/* PlayerList in sidebar */
+.player-list {
+  flex: 0 0 auto;
+  max-height: 50%;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--glass-border);
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.player-list::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.player-list.compact {
+  max-height: 40%;
+}
+
+.player-list-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.player-list-content {
+  padding: 0.5rem;
+}
+
+.player-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.player-item:hover {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.player-item.host {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.player-item.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.player-item.disconnected {
+  opacity: 0.6;
+  border-color: rgba(251, 146, 60, 0.4);
+}
+
+/* Chat in sidebar */
+.sidebar-chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Hide scrollbars for chat */
+.sidebar-chat {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.sidebar-chat::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .right-sidebar {
+    width: 100%;
+    max-height: 60vh;
+    border-left: none;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .game-content {
+    padding: 1rem;
+  }
+
+  .player-list {
+    max-height: 30vh;
+  }
+
+  .webcam-top-bar video {
+    max-height: 150px;
+  }
+}
+
+/* Tablet breakpoint */
+@media (max-width: 768px) {
+  .webcam-top-bar {
+    padding: 0.5rem;
+  }
+
+  .webcam-top-bar video {
+    max-height: 120px;
+  }
+
+  .game-content {
+    padding: 0.75rem;
+    padding-bottom: 90px; /* Space for toggle button */
+  }
+
+  /* Webcam toggle button - more prominent on mobile */
+  .webcam-toggle-btn {
+    bottom: 80px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* Container for backwards compatibility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* Round info styling */
+.round-info {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border: 1px solid var(--glass-border);
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge.host {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #000;
+}
+
+.badge.you {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+}
+
+/* Button danger override for backwards compatibility */
+button.danger {
+  background: linear-gradient(to right, var(--danger-500), var(--danger-600));
+}
+
+button.danger:hover {
+  background: linear-gradient(to right, var(--danger-600), var(--danger-500));
+}

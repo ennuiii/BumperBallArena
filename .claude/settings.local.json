@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Select-Object Id, ProcessName, StartTime)",
+      "Read(//c//**)",
+      "Read(//c/GamebuddieGamesTemplate/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
