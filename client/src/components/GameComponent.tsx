@@ -359,6 +359,8 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
     }}>
       {/* THREE.JS CANVAS - Optimized for 144fps with great visuals */}
       <Canvas
+        frameloop="always"
+        dpr={[1, 2]}
         camera={{ position: [15, 15, 15], fov: 50 }}
         gl={{
           antialias: true,
@@ -571,6 +573,7 @@ const PlayerBallMesh: React.FC<{ player: PlayerBall; isMe: boolean }> = ({
   const glowRef = useRef<THREE.Mesh>(null);
   const targetPosition = useRef(new THREE.Vector3());
   const currentPosition = useRef(new THREE.Vector3());
+  const lastUpdateTime = useRef(Date.now());
 
   useEffect(() => {
     targetPosition.current.set(
@@ -578,12 +581,22 @@ const PlayerBallMesh: React.FC<{ player: PlayerBall; isMe: boolean }> = ({
       player.position.y,
       player.position.z
     );
+    lastUpdateTime.current = Date.now();
   }, [player.position]);
 
   useFrame(() => {
     if (meshRef.current && glowRef.current) {
-      // Smooth position interpolation
-      currentPosition.current.lerp(targetPosition.current, 0.2);
+      // Time-based interpolation for frame-rate independent smoothing
+      // Higher alpha = faster interpolation (good for 60Hz server updates)
+      const timeSinceUpdate = Date.now() - lastUpdateTime.current;
+
+      // Adaptive lerp: faster interpolation for recent updates, slower for older ones
+      // This prevents stuttering while maintaining smoothness
+      const baseAlpha = 0.3; // Increased from 0.2 for 60Hz server updates
+      const timeDecay = Math.min(timeSinceUpdate / 100, 1.0); // Normalize to 100ms
+      const alpha = Math.min(baseAlpha * (1 + timeDecay), 0.9); // Cap at 0.9 to prevent overshooting
+
+      currentPosition.current.lerp(targetPosition.current, alpha);
       meshRef.current.position.copy(currentPosition.current);
       glowRef.current.position.copy(currentPosition.current);
 

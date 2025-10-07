@@ -73,7 +73,7 @@ const CONSTANTS = {
 
   // Game
   TICK_RATE: 60, // ticks per second
-  SYNC_RATE: 30, // state broadcasts per second
+  SYNC_RATE: 60, // state broadcasts per second (increased from 30 for smoother 144fps gameplay)
   COUNTDOWN_DURATION: 3, // seconds
 
   // Stamina
