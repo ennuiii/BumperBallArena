@@ -14,7 +14,6 @@ import {
 } from './utils/validation';
 import { randomUUID } from 'crypto';
 import { initializeBumperBallsGame, setupBumperBallsHandlers } from './games/bumper-balls';
-import path from 'path';
 
 dotenv.config();
 
@@ -710,7 +709,7 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-// Health check endpoint (before static files to ensure it's accessible)
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -718,25 +717,6 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-
-// Serve static files from client build (production)
-if (process.env.NODE_ENV === 'production') {
-  const clientDistPath = path.join(__dirname, '..', '..', 'client', 'dist');
-  console.log(`[Static] Serving client from: ${clientDistPath}`);
-
-  // Serve static files
-  app.use(express.static(clientDistPath));
-
-  // SPA catch-all: serve index.html for all non-API routes
-  app.use((req, res, next) => {
-    // Skip if it's a Socket.IO request or API endpoint
-    if (req.path.startsWith('/socket.io') || req.path.startsWith('/health')) {
-      return next();
-    }
-    // For all other routes, serve index.html (client-side routing)
-    res.sendFile(path.join(clientDistPath, 'index.html'));
-  });
-}
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
 httpServer.listen(PORT, () => {
