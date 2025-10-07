@@ -8,7 +8,7 @@
     "client": "cd client && npm run dev",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "tsc",
-    "build:client": "cd client && npm install && npm run build",
+    "build:client": "cd client && npm install --include=dev && npm run build",
     "build:render": "npm ci --include=dev && npm run build && npm run build:client",
     "start": "node dist/server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
