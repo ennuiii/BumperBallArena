@@ -14,7 +14,6 @@ interface GameLayoutProps {
 
 const GameLayout: React.FC<GameLayoutProps> = ({ children, lobby, socket }) => {
   const [isWebcamHidden, setIsWebcamHidden] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(true);
 
   return (
     <div className="app-layout">
@@ -73,11 +72,9 @@ const GameLayout: React.FC<GameLayoutProps> = ({ children, lobby, socket }) => {
           {/* Chat */}
           <div className="sidebar-chat">
             <ChatWindow
-              lobby={lobby}
+              roomCode={lobby.code}
               socket={socket}
-              isOpen={isChatOpen}
-              onClose={() => setIsChatOpen(false)}
-              mode="sidebar"
+              messages={lobby.messages || []}
             />
           </div>
         </div>

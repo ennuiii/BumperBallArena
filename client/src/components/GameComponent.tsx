@@ -34,11 +34,6 @@ import GameBuddiesReturnButton from './GameBuddiesReturnButton';
 
 const PLATFORM_RADIUS = 10;
 const BALL_RADIUS = 0.5;
-const COLORS = {
-  platform: '#1a202c',
-  platformEdge: '#667eea',
-  sky: '#0f1419',
-};
 
 // ============================================================================
 // MAIN COMPONENT
@@ -51,7 +46,6 @@ interface GameComponentProps {
 
 const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
   const [gameData, setGameData] = useState<BumperBallsGameData | null>(lobby.gameData || null);
-  const [input, setInput] = useState<MovementInput>({ x: 0, z: 0, sprint: false });
   const lastSentInput = useRef<MovementInput>({ x: 0, z: 0, sprint: false });
   const keysPressed = useRef<Set<string>>(new Set());
 
@@ -61,7 +55,7 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Use socket.id as fallback if lobby.mySocketId is not set
-  const mySocketId = lobby.mySocketId || socket.id;
+  const mySocketId = lobby.mySocketId || socket.id || '';
   const currentPlayer = lobby.players.find(p => p.socketId === mySocketId);
   const isHost = currentPlayer?.isHost || false;
 
@@ -190,7 +184,6 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
         newInput.z !== lastSentInput.current.z ||
         newInput.sprint !== lastSentInput.current.sprint
       ) {
-        setInput(newInput);
         socket.emit('bumper:move', {
           roomCode: lobby.code,
           movement: newInput,
@@ -305,7 +298,6 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
           newInput.z !== lastSentInput.current.z ||
           newInput.sprint !== lastSentInput.current.sprint
         ) {
-          setInput(newInput);
           socket.emit('bumper:move', {
             roomCode: lobby.code,
             movement: newInput,

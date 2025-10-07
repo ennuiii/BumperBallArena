@@ -937,7 +937,7 @@ export const WebRTCProvider: React.FC<WebRTCProviderProps> = ({ children }) => {
               height: { ideal: 480, max: 720 },
               frameRate: { ideal: 24, max: 30 }
             },
-            audio: getHighQualityAudioConstraints(state.selectedDevices.microphoneId || undefined)
+            audio: getAudioConstraints(state.selectedDevices.microphoneId || undefined)
           });
           
           // Apply current mute states
@@ -1003,7 +1003,7 @@ export const WebRTCProvider: React.FC<WebRTCProviderProps> = ({ children }) => {
               height: { ideal: 480, max: 720 },
               frameRate: { ideal: 24, max: 30 }
             },
-            audio: getHighQualityAudioConstraints(deviceId)
+            audio: getAudioConstraints(deviceId)
           });
           
           // Apply current mute states

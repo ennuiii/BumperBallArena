@@ -1615,7 +1615,7 @@ interface WebcamDisplayProps {
   lobby?: any; // Lobby data to get ball colors from gameData
 }
 
-const WebcamDisplay: React.FC<WebcamDisplayProps> = ({ className = '', lobby }) => {
+const WebcamDisplay: React.FC<WebcamDisplayProps> = ({ className = '' }) => {
   const { 
     isVideoEnabled, 
     isVideoPrepairing,
