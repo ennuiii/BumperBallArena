@@ -167,12 +167,18 @@ function App() {
 
     socket.on('game:started', (data: { lobby: Lobby }) => {
       console.log('[App] Game started');
-      setLobby(data.lobby);
+      setLobby((prevLobby) => ({
+        ...data.lobby,
+        mySocketId: prevLobby?.mySocketId ?? data.lobby.mySocketId  // Preserve client-specific mySocketId
+      }));
     });
 
     socket.on('game:ended', (data: { lobby: Lobby }) => {
       console.log('[App] Game ended');
-      setLobby(data.lobby);
+      setLobby((prevLobby) => ({
+        ...data.lobby,
+        mySocketId: prevLobby?.mySocketId ?? data.lobby.mySocketId  // Preserve client-specific mySocketId
+      }));
     });
 
     // Chat events
