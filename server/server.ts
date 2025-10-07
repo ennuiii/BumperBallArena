@@ -14,6 +14,7 @@ import {
 } from './utils/validation';
 import { randomUUID } from 'crypto';
 import { initializeBumperBallsGame, setupBumperBallsHandlers } from './games/bumper-balls';
+import path from 'path';
 
 dotenv.config();
 
@@ -709,6 +710,13 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
+// Serve static files from client build (production)
+if (process.env.NODE_ENV === 'production') {
+  const clientDistPath = path.join(__dirname, '..', '..', 'client', 'dist');
+  console.log(`[Static] Serving client from: ${clientDistPath}`);
+  app.use(express.static(clientDistPath));
+}
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
@@ -717,6 +725,13 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Catch-all route for client-side routing (SPA) - must be last
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client', 'dist', 'index.html'));
+  });
+}
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
 httpServer.listen(PORT, () => {
