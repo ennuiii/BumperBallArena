@@ -463,17 +463,17 @@ function resolveCollision(
   // Don't resolve if velocities are separating
   if (velAlongNormal > 0) return;
 
-  // Base restitution (bounciness)
-  const restitution = 1.8;
+  // Base restitution (bounciness) - INCREASED for more powerful bumps
+  const restitution = 3.5; // Increased from 1.8
 
   // Calculate impulse with mass consideration
   const totalMass = mass1 + mass2;
   const j = -(1 + restitution) * velAlongNormal / totalMass;
 
-  // Speed-based knockback multiplier
+  // Speed-based knockback multiplier - INCREASED for more impactful hits
   // "The faster you're going when you bump an opponent, the farther your opponent is bumped"
-  const speedFactor1 = 1.0 + (speed1 / CONSTANTS.MAX_VELOCITY) * 1.5;
-  const speedFactor2 = 1.0 + (speed2 / CONSTANTS.MAX_VELOCITY) * 1.5;
+  const speedFactor1 = 1.0 + (speed1 / CONSTANTS.MAX_VELOCITY) * 3.0; // Increased from 1.5
+  const speedFactor2 = 1.0 + (speed2 / CONSTANTS.MAX_VELOCITY) * 3.0; // Increased from 1.5
 
   // Apply asymmetric impulses based on mass and speed
   // Player 1 receives knockback based on Player 2's speed and mass
@@ -488,7 +488,7 @@ function resolveCollision(
   p2.velocity.z += impulse2 * nz;
 
   // Minimum impulse for satisfying bumps (even low-speed collisions feel impactful)
-  const minImpulse = 3.0;
+  const minImpulse = 8.0; // Increased from 3.0 for much stronger bumps
   const p1ImpulseMagnitude = Math.sqrt((impulse1 * nx) ** 2 + (impulse1 * nz) ** 2);
   const p2ImpulseMagnitude = Math.sqrt((impulse2 * nx) ** 2 + (impulse2 * nz) ** 2);
 

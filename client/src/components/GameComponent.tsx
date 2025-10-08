@@ -6,7 +6,6 @@ import { BlendFunction } from 'postprocessing';
 import type { Lobby, BumperBallsGameData, MovementInput, PlayerBall } from '../types';
 import type { Socket } from 'socket.io-client';
 import * as THREE from 'three';
-import GameBuddiesReturnButton from './GameBuddiesReturnButton';
 
 /**
  * Bumper Balls Arena - 144fps Optimized 3D Game
@@ -1025,17 +1024,6 @@ const GameUI: React.FC<{
         </div>
       )}
 
-
-      {/* GameBuddies Return */}
-      {lobby.isGameBuddiesRoom && (
-        <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 10 }}>
-          <GameBuddiesReturnButton
-            roomCode={lobby.code}
-            socket={socket}
-            isHost={lobby.mySocketId === lobby.hostId}
-          />
-        </div>
-      )}
 
       {/* Add CSS animation for pulse effect */}
       <style>{`
