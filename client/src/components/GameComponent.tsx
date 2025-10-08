@@ -49,7 +49,7 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
   const keysPressed = useRef<Set<string>>(new Set());
 
   // Music controls
-  const [volume, setVolume] = useState(50); // 0-100
+  const [volume, setVolume] = useState(20); // 0-100, default to 20% for comfortable starting volume
   const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 

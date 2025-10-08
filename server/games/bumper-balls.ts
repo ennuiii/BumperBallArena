@@ -59,11 +59,11 @@ interface BumperBallsGameData {
 const CONSTANTS = {
   // Physics
   BALL_RADIUS: 0.5,
-  MAX_VELOCITY: 25.0, // Increased from 15.0
-  SPRINT_MAX_VELOCITY: 40.0, // Increased from 25.0
-  MOVE_FORCE: 50.0, // Increased from 30.0
-  SPRINT_FORCE: 80.0, // Increased from 50.0
-  FRICTION: 0.88, // Slightly increased for better control at high speed
+  MAX_VELOCITY: 30.0, // Increased from 25.0 for faster movement
+  SPRINT_MAX_VELOCITY: 50.0, // Increased from 40.0 for aggressive gameplay
+  MOVE_FORCE: 75.0, // Increased from 50.0 for snappier acceleration
+  SPRINT_FORCE: 120.0, // Increased from 80.0 for explosive sprint speed
+  FRICTION: 0.90, // Increased from 0.88 for better momentum retention
   GRAVITY: 9.81,
 
   // Platform
@@ -463,17 +463,17 @@ function resolveCollision(
   // Don't resolve if velocities are separating
   if (velAlongNormal > 0) return;
 
-  // Base restitution (bounciness) - MASSIVELY INCREASED for extremely powerful bumps
-  const restitution = 7.0; // Doubled from 3.5 (was 1.8 originally)
+  // Base restitution (bounciness) - EXTREMELY POWERFUL for instant eliminations
+  const restitution = 10.5; // 1.5x from 7.0 (was 1.8 originally)
 
   // Calculate impulse with mass consideration
   const totalMass = mass1 + mass2;
   const j = -(1 + restitution) * velAlongNormal / totalMass;
 
-  // Speed-based knockback multiplier - MASSIVELY INCREASED for devastating hits
+  // Speed-based knockback multiplier - INSANE power for maximum impact
   // "The faster you're going when you bump an opponent, the farther your opponent is bumped"
-  const speedFactor1 = 1.0 + (speed1 / CONSTANTS.MAX_VELOCITY) * 6.0; // Doubled from 3.0
-  const speedFactor2 = 1.0 + (speed2 / CONSTANTS.MAX_VELOCITY) * 6.0; // Doubled from 3.0
+  const speedFactor1 = 1.0 + (speed1 / CONSTANTS.MAX_VELOCITY) * 9.0; // 1.5x from 6.0
+  const speedFactor2 = 1.0 + (speed2 / CONSTANTS.MAX_VELOCITY) * 9.0; // 1.5x from 6.0
 
   // Apply asymmetric impulses based on mass and speed
   // Player 1 receives knockback based on Player 2's speed and mass
@@ -488,7 +488,7 @@ function resolveCollision(
   p2.velocity.z += impulse2 * nz;
 
   // Minimum impulse for satisfying bumps (even low-speed collisions feel impactful)
-  const minImpulse = 16.0; // Doubled from 8.0 for extremely powerful bumps
+  const minImpulse = 24.0; // 1.5x from 16.0 for devastating bumps
   const p1ImpulseMagnitude = Math.sqrt((impulse1 * nx) ** 2 + (impulse1 * nz) ** 2);
   const p2ImpulseMagnitude = Math.sqrt((impulse2 * nx) ** 2 + (impulse2 * nz) ** 2);
 
