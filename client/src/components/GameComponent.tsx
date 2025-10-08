@@ -96,9 +96,28 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
   // Initialize audio element
   useEffect(() => {
     if (!audioRef.current) {
-      const audio = new Audio('/music/Bumper Ball Beatdown.mp3');
+      // Use BASE_URL to ensure correct path when behind proxy (e.g., /bumperball/)
+      const musicPath = `${import.meta.env.BASE_URL}music/Bumper Ball Beatdown.mp3`;
+      console.log('[Music] Loading from path:', musicPath);
+      console.log('[Music] BASE_URL:', import.meta.env.BASE_URL);
+
+      const audio = new Audio(musicPath);
       audio.loop = true;
       audio.volume = volume / 100;
+
+      // Add event listeners to debug loading
+      audio.addEventListener('loadeddata', () => {
+        console.log('[Music] Audio loaded successfully');
+      });
+      audio.addEventListener('error', (e) => {
+        console.error('[Music] Failed to load audio:', {
+          error: e,
+          src: audio.src,
+          networkState: audio.networkState,
+          readyState: audio.readyState
+        });
+      });
+
       audioRef.current = audio;
     }
 
@@ -115,7 +134,17 @@ const GameComponent: React.FC<GameComponentProps> = ({ lobby, socket }) => {
     if (!audioRef.current || !gameData) return;
 
     if (gameData.status === 'playing') {
-      audioRef.current.play().catch(err => console.log('[Music] Autoplay prevented:', err));
+      console.log('[Music] Attempting to play. Audio src:', audioRef.current.src);
+      audioRef.current.play().catch(err => {
+        console.error('[Music] Autoplay prevented:', {
+          error: err,
+          name: err.name,
+          message: err.message,
+          src: audioRef.current?.src,
+          networkState: audioRef.current?.networkState,
+          readyState: audioRef.current?.readyState
+        });
+      });
     } else {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
