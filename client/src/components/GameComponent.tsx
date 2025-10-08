@@ -845,32 +845,32 @@ const GameUI: React.FC<{
         )}
       </div>
 
-      {/* Eliminated Overlay */}
+      {/* Eliminated Overlay - Top Left Corner */}
       {isEliminated && (
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.95) 100%)',
-            padding: '50px',
-            borderRadius: '25px',
-            textAlign: 'center',
+            top: '20px',
+            left: '20px',
+            background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.85) 100%)',
+            padding: '25px 30px',
+            borderRadius: '15px',
+            textAlign: 'left',
             color: '#FFF',
             zIndex: 100,
-            backdropFilter: 'blur(20px)',
+            backdropFilter: 'blur(10px)',
             border: '2px solid rgba(255, 68, 68, 0.5)',
-            boxShadow: '0 20px 60px rgba(255, 68, 68, 0.4)',
+            boxShadow: '0 8px 24px rgba(255, 68, 68, 0.3)',
+            maxWidth: '300px',
           }}
         >
-          <h2 style={{ fontSize: '64px', marginBottom: '20px', color: '#FF4444', textShadow: '0 0 30px rgba(255, 68, 68, 0.8)' }}>
+          <h2 style={{ fontSize: '32px', marginBottom: '10px', color: '#FF4444', textShadow: '0 0 20px rgba(255, 68, 68, 0.8)' }}>
             ELIMINATED!
           </h2>
-          <p style={{ fontSize: '28px', opacity: 0.9 }}>
+          <p style={{ fontSize: '18px', opacity: 0.9, marginBottom: '8px' }}>
             You finished #{gameData.eliminationOrder.indexOf(mySocketId) + 1}
           </p>
-          <p style={{ marginTop: '30px', opacity: 0.7, fontSize: '18px' }}>Spectating...</p>
+          <p style={{ opacity: 0.7, fontSize: '14px' }}>👁️ Spectating the arena...</p>
         </div>
       )}
 
