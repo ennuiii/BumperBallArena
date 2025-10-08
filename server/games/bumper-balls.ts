@@ -524,7 +524,15 @@ function checkEliminations(gameData: BumperBallsGameData, roomCode: string, io: 
   for (const player of gameData.players) {
     if (player.isEliminated) continue;
 
-    // Check if fallen off platform
+    // Check if out of bounds (outside platform radius) - INSTANT ELIMINATION
+    const distFromCenter = Math.sqrt(player.position.x ** 2 + player.position.z ** 2);
+    if (distFromCenter > CONSTANTS.PLATFORM_RADIUS) {
+      console.log(`[Elimination] ${player.name} went out of bounds! Distance: ${distFromCenter.toFixed(2)} (platform radius: ${CONSTANTS.PLATFORM_RADIUS})`);
+      eliminatePlayer(player, gameData, roomCode, io);
+      continue; // Skip other checks once eliminated
+    }
+
+    // Check if fallen below platform (secondary check)
     if (player.position.y < CONSTANTS.FALL_THRESHOLD) {
       console.log(`[Elimination] ${player.name} fell off! Y position: ${player.position.y.toFixed(2)} (threshold: ${CONSTANTS.FALL_THRESHOLD})`);
       eliminatePlayer(player, gameData, roomCode, io);
