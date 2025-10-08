@@ -1029,7 +1029,11 @@ const GameUI: React.FC<{
       {/* GameBuddies Return */}
       {lobby.isGameBuddiesRoom && (
         <div style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 10 }}>
-          <GameBuddiesReturnButton roomCode={lobby.code} socket={socket} />
+          <GameBuddiesReturnButton
+            roomCode={lobby.code}
+            socket={socket}
+            isHost={lobby.mySocketId === lobby.hostId}
+          />
         </div>
       )}
 

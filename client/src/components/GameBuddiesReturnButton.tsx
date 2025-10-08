@@ -4,11 +4,17 @@ import type { Socket } from 'socket.io-client';
 interface GameBuddiesReturnButtonProps {
   roomCode: string;
   socket: Socket;
+  isHost: boolean;
 }
 
-const GameBuddiesReturnButton: React.FC<GameBuddiesReturnButtonProps> = ({ roomCode, socket }) => {
+const GameBuddiesReturnButton: React.FC<GameBuddiesReturnButtonProps> = ({ roomCode, socket, isHost }) => {
   const [isReturning, setIsReturning] = useState(false);
   const [countdown, setCountdown] = useState(3);
+
+  // Only host can see and use the return button
+  if (!isHost && !isReturning) {
+    return null;
+  }
 
   useEffect(() => {
     const handleReturnRedirect = (data: { url: string }) => {

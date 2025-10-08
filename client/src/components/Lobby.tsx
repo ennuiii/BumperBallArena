@@ -227,7 +227,11 @@ const Lobby: React.FC<LobbyProps> = ({ lobby, socket, gameBuddiesSession }) => {
       )}
 
       {lobby.isGameBuddiesRoom && (
-        <GameBuddiesReturnButton roomCode={lobby.code} socket={socket} />
+        <GameBuddiesReturnButton
+          roomCode={lobby.code}
+          socket={socket}
+          isHost={lobby.mySocketId === lobby.hostId}
+        />
       )}
     </div>
   );
