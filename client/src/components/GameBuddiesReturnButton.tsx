@@ -11,7 +11,7 @@ const GameBuddiesReturnButton: React.FC<GameBuddiesReturnButtonProps> = ({ roomC
   const [countdown, setCountdown] = useState(3);
 
   useEffect(() => {
-    const handleReturnRedirect = (data: { returnUrl: string }) => {
+    const handleReturnRedirect = (data: { url: string }) => {
       console.log('[GameBuddies] Received return-redirect:', data);
       setIsReturning(true);
 
@@ -23,7 +23,7 @@ const GameBuddiesReturnButton: React.FC<GameBuddiesReturnButtonProps> = ({ roomC
 
         if (count <= 0) {
           clearInterval(interval);
-          window.location.href = data.returnUrl;
+          window.location.href = data.url;
         }
       }, 1000);
     };
