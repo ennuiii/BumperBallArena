@@ -562,10 +562,13 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('gamebuddies:return', async (data: {
     roomCode: string;
-    returnAll?: boolean;
+    mode: 'group' | 'individual';
+    reason?: string;
   }) => {
     try {
-      const lobby = lobbies.get(data.roomCode);
+      const { roomCode, mode, reason } = data;
+      const lobby = lobbies.get(roomCode);
+
       if (!lobby || !lobby.isGameBuddiesRoom) {
         console.log('[gamebuddies:return] Not a GameBuddies room');
         socket.emit('gamebuddies:return-redirect', {
@@ -574,22 +577,36 @@ io.on('connection', (socket: Socket) => {
         return;
       }
 
-      console.log(`[GameBuddies] Return request for room ${lobby.code}`);
+      const returnAll = mode === 'group';
+      const player = lobby.players.find((p) => p.socketId === socket.id);
+
+      console.log(
+        `[Lobby ${lobby.code}] Return request (mode: ${mode}) by ${player?.name}`
+      );
 
       const result = await gameBuddiesService.requestReturnToLobby(
         lobby.gameBuddiesRoomCode || lobby.code,
         {
-          returnAll: data.returnAll ?? true,
-          initiatedBy: 'host',
-          reason: 'game_ended',
+          playerId: returnAll ? undefined : player?.gameBuddiesUuid,
+          initiatedBy: player?.name || 'unknown',
+          reason: reason || 'user_initiated',
+          returnAll,
         }
       );
 
-      if (data.returnAll) {
+      if (returnAll) {
+        // Return entire room
         io.to(lobby.code).emit('gamebuddies:return-redirect', {
           url: result.returnUrl,
         });
+
+        // Clean up room after delay
+        setTimeout(() => {
+          lobbies.delete(lobby.code);
+          console.log(`[Lobby ${lobby.code}] Cleaned up after return`);
+        }, 2000);
       } else {
+        // Return single player
         socket.emit('gamebuddies:return-redirect', {
           url: result.returnUrl,
         });
