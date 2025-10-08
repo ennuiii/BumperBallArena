@@ -21,7 +21,7 @@ const SERVER_URL = getServerUrl();
 class SocketService {
   private socket: Socket | null = null;
   private reconnectAttempts = 0;
-  private maxReconnectAttempts = 5;
+  private maxReconnectAttempts = 10; // Increased for Render.com cold starts
 
   connect(): Socket {
     if (this.socket?.connected) {
@@ -33,9 +33,10 @@ class SocketService {
     this.socket = io(SERVER_URL, {
       reconnection: true,
       reconnectionAttempts: this.maxReconnectAttempts,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      transports: ['websocket', 'polling'],
+      reconnectionDelay: 2000, // Increased from 1000ms for cold starts
+      reconnectionDelayMax: 10000, // Increased from 5000ms for cold starts
+      timeout: 60000, // 60 second timeout to handle Render.com free tier cold starts
+      transports: ['polling', 'websocket'], // Try polling first (more reliable for cold starts)
     });
 
     this.socket.on('connect', () => {

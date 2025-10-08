@@ -213,8 +213,11 @@ function App() {
       return (
         <div className="container">
           <h1>Connecting...</h1>
-          <p style={{ textAlign: 'center', color: '#94a3b8' }}>
+          <p style={{ textAlign: 'center', color: '#94a3b8', marginBottom: '10px' }}>
             Connecting to server...
+          </p>
+          <p style={{ textAlign: 'center', color: '#64748b', fontSize: '14px' }}>
+            🔄 Server may be starting up. This can take up to 60 seconds on first connection.
           </p>
         </div>
       );
